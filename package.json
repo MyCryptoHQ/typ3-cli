@@ -1,6 +1,6 @@
 {
   "name": "@aitreanincorporated/typ3-cli",
-  "version": "1.0.4",
+  "version": "1.0.6",
   "description": "CLI tool for creating typed definition files from ABI",
   "main": "index.js",
   "scripts": {
