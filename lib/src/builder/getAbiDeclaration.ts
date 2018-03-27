@@ -1,3 +1,4 @@
+import { getConstructorDetails } from './utils/getDetails';
 import { defaultProperties } from './staticContent';
 import { FunctionDefinition } from '../Types/AbiTypes';
 import { getPath, getName, getDetails } from './utils'
@@ -7,22 +8,21 @@ import { Output } from '../io';
 export const getAbiDeclaration = (abi: any, interfaceName: string): string => {
  let abiTypings = '';
  let connectedAbiTypings = '';
- let constructorTypings = '';
+ let constructorTypings;
  const abiObject = parseAbi(abi);
- if(abiObject.constructorFunction && abiObject.constructorFunction.inputs) {
-	 constructorTypings += `${getDetails(abiObject.constructorFunction, true)}\n`
- } else {
-	 constructorTypings += `never\n`
+ const { constructorFunction, overloadedFunctions, regularFunctions } = abiObject;
+ if(constructorFunction){
+	 constructorTypings = getConstructorDetails(constructorFunction)
  }
- if(abiObject.overloadedFunctions){
-	Object.keys(abiObject.overloadedFunctions).forEach((name: string) => {
-		abiTypings += `${name}: ${parseOverloadedFunctions(abiObject.overloadedFunctions[name])}\n`
-		connectedAbiTypings += `${name}: ${parseOverloadedFunctions(abiObject.overloadedFunctions[name], true)}\n`
+ if(overloadedFunctions){
+	Object.keys(overloadedFunctions).forEach((name: string) => {
+		abiTypings += `${name}: ${parseOverloadedFunctions(overloadedFunctions[name])}\n`
+		connectedAbiTypings += `${name}: ${parseOverloadedFunctions(overloadedFunctions[name], true)}\n`
 	 })
  }
- if(abiObject.regularFunctions){
-	Object.keys(abiObject.regularFunctions).forEach((name: string) => {
-		const func = abiObject.regularFunctions[name]
+ if(regularFunctions){
+	Object.keys(regularFunctions).forEach((name: string) => {
+		const func = regularFunctions[name]
 		abiTypings += `${name}: ${getDetails(func)}\n`
 		connectedAbiTypings += `${name}: ${getDetails(func, true)};\n`
 	})
@@ -30,7 +30,7 @@ export const getAbiDeclaration = (abi: any, interfaceName: string): string => {
 
 	const contractInterface = `export interface I${interfaceName}{\n${abiTypings}}`
 	const connectedContractInterface = `export interface I${interfaceName}Connected {\n${defaultProperties}${connectedAbiTypings}}\n`
-	const connectedContractConstructor = `export type I${interfaceName}Constructor = ${constructorTypings}`
+	const connectedContractConstructor = constructorTypings ? `export interface I${interfaceName}Constructor {\n${constructorTypings}\n}\n` : ``
 
 	const combinedContractInterface = `${contractInterface}\n${connectedContractInterface}${connectedContractConstructor}`
 	return combinedContractInterface;

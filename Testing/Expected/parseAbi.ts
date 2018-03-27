@@ -93,15 +93,29 @@ export const parseAbiTest2 = {
 };
 
 export const parseAbiTest3 = {
-  constructorFunction: {},
+  constructorFunction: {
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'uint256'
+      },
+      {
+        name: 'arg1',
+        type: 'bytes32'
+      }
+    ],
+    payable: false,
+    stateMutability: 'nonpayable',
+    type: 'constructor'
+  },
   overloadedFunctions: {
     overloaded: [
       {
         constant: false,
         inputs: [
           {
-            name: 'a',
-            type: 'bytes32'
+            name: 'arg0',
+            type: 'uint256'
           }
         ],
         outputs: [],
@@ -113,8 +127,12 @@ export const parseAbiTest3 = {
         constant: false,
         inputs: [
           {
-            name: 'a',
+            name: 'arg0',
             type: 'uint256'
+          },
+          {
+            name: 'arg1',
+            type: 'bytes32'
           }
         ],
         outputs: [],
@@ -124,14 +142,5 @@ export const parseAbiTest3 = {
       }
     ]
   },
-  regularFunctions: {
-    Test3: {
-      constant: false,
-      inputs: [],
-      outputs: [],
-      payable: false,
-      stateMutability: 'nonpayable',
-      type: 'function'
-    }
-  }
+  regularFunctions: {}
 };

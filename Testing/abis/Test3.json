@@ -3,7 +3,25 @@
 		"constant": false,
 		"inputs": [
 			{
-				"name": "a",
+				"name": "arg0",
+				"type": "uint256"
+			},
+			{
+				"name": "arg1",
+				"type": "bytes32"
+			}
+		],
+		"name": "overloaded",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "arg0",
 				"type": "uint256"
 			}
 		],
@@ -14,26 +32,18 @@
 		"type": "function"
 	},
 	{
-		"constant": false,
-		"inputs": [],
-		"name": "Test3",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": false,
 		"inputs": [
 			{
-				"name": "a",
+				"name": "arg0",
+				"type": "uint256"
+			},
+			{
+				"name": "arg1",
 				"type": "bytes32"
 			}
 		],
-		"name": "overloaded",
-		"outputs": [],
 		"payable": false,
 		"stateMutability": "nonpayable",
-		"type": "function"
+		"type": "constructor"
 	}
 ]
